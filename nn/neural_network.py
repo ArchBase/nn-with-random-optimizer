@@ -10,6 +10,7 @@ class Neuron:
         self.buffer = 0
         for _ in range(no_of_weights):
             self.weights.append(np.random.uniform(gb.config["random_value_min"], gb.config["random_value_max"]))
+        self.bias = np.random.uniform(gb.config["random_value_min"], gb.config["random_value_max"])
     
     def forward_pass(self, input_data=[]):
         if len(input_data) != len(self.weights):
@@ -38,6 +39,15 @@ class Dense_Layer:
         for _ in range(self.no_of_neurons):
             self.buffer.append(self.neurons[_].forward_pass(input_data=input_data))
         return self.buffer
+    
+    def get_parameter_array(self):
+        self.buffer.clear()
+        for _ in range(self.no_of_neurons):
+            self.buffer += self.neurons[_].weights
+            self.buffer.append(self.neurons[_].bias)
+        return self.buffer.copy()
+    def apply_parameters(self, ):
+        for _ in range()
 
 
 class Sequential_Neural_Network:
@@ -59,13 +69,24 @@ class Sequential_Neural_Network:
         for _ in range(len(self.layers)):
             self.buffer = self.layers[_].forward_pass(self.buffer)
         return self.buffer
+    
+    def get_parameter_array(self):
+        self.buffer.clear()
+        for _ in range(len(self.layers)):
+            self.buffer += self.layers[_].get_parameter_array()
+        return self.buffer
+    def apply_parameter(self):
+        for _ in range(len(self.layers)):
+            
 
 
 
-network = Sequential_Neural_Network()
-network.add(Dense_Layer(2))
-network.add(Dense_Layer(3))
-network.add(Dense_Layer(3))
-network.build(input_length=2)
-print("Success")
-print(network.forward_pass([3, 5]))
+
+#network = Sequential_Neural_Network()
+#network.add(Dense_Layer(2))
+#network.add(Dense_Layer(3))
+#network.add(Dense_Layer(3))
+#network.build(input_length=2)
+#print(network.get_parameter_array())
+#print("Success")
+#print(network.forward_pass([3, 5]))
