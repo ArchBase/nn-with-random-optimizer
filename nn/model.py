@@ -26,8 +26,17 @@ optm = optimizer.Flash_Optimizer(network, lsfn)
 x_train = [[1, 2], [5, 2], [7, 9], [0, 3], [4, 2]]
 y_train = [[3], [6], [7], [4], [10]]
 
-print(network.get_parameter_array())
+u = network.get_parameter_array()
 print("Hai")
-optm.train_network(x_train, y_train)
+print(u)
+for _ in range(len(u)):
+    u[_] = u[_] + np.random.uniform(gb.config["optimizer_random_min"], gb.config["optimizer_random_max"])
+            
+    network.apply_parameter(u)
+
+
+print("YOYO GUY")
+print(network.get_parameter_array())
+#optm.train_network(x_train, y_train)
 
 
