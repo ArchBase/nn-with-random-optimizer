@@ -21,7 +21,12 @@ class Neuron:
                 self.buffer += self.weights[_] * input_data[_]
             self.buffer += self.bias
             return max(0, self.buffer)
-    
+    def apply_parameters(self, parameter_array=[]):
+        _ = 0
+        for _ in range(len(self.weights)):
+            self.weights[_] = parameter_array[_]
+        self.bias = parameter_array[_ + 1]
+        return parameter_array[_+2:]
 
 
 
@@ -46,8 +51,11 @@ class Dense_Layer:
             self.buffer += self.neurons[_].weights
             self.buffer.append(self.neurons[_].bias)
         return self.buffer.copy()
-    def apply_parameters(self, ):
-        for _ in range()
+    def apply_parameters(self, parameter_array=[]):
+        parameter_array = parameter_array
+        for _ in range(self.no_of_neurons):
+            parameter_array = self.neurons[_].apply_parameters(parameter_array=parameter_array)
+        return parameter_array
 
 
 class Sequential_Neural_Network:
@@ -75,18 +83,24 @@ class Sequential_Neural_Network:
         for _ in range(len(self.layers)):
             self.buffer += self.layers[_].get_parameter_array()
         return self.buffer
-    def apply_parameter(self):
+    def apply_parameter(self, parameter_array=[]):
+        parameter_array = parameter_array
         for _ in range(len(self.layers)):
-            
+            parameter_array = self.layers[_].apply_parameters(parameter_array=parameter_array)
 
 
 
 
-#network = Sequential_Neural_Network()
-#network.add(Dense_Layer(2))
-#network.add(Dense_Layer(3))
-#network.add(Dense_Layer(3))
-#network.build(input_length=2)
-#print(network.get_parameter_array())
-#print("Success")
+network = Sequential_Neural_Network()
+network.add(Dense_Layer(2))
+network.add(Dense_Layer(3))
+network.add(Dense_Layer(3))
+network.build(input_length=2)
+u = network.get_parameter_array()
+print(u)
+print("Success")
+for _ in range(len(u)):
+    u[_] += 1
+network.apply_parameter(u)
+print(network.get_parameter_array())
 #print(network.forward_pass([3, 5]))
