@@ -82,7 +82,7 @@ class Sequential_Neural_Network:
         self.buffer.clear()
         for _ in range(len(self.layers)):
             self.buffer += self.layers[_].get_parameter_array()
-        return self.buffer
+        return self.buffer.copy()
     def apply_parameter(self, parameter_array=[]):
         parameter_array = parameter_array
         for _ in range(len(self.layers)):
@@ -91,7 +91,7 @@ class Sequential_Neural_Network:
 
 
 
-network = Sequential_Neural_Network()
+"""network = Sequential_Neural_Network()
 network.add(Dense_Layer(2))
 network.add(Dense_Layer(3))
 network.add(Dense_Layer(3))
@@ -103,4 +103,4 @@ for _ in range(len(u)):
     u[_] += 1
 network.apply_parameter(u)
 print(network.get_parameter_array())
-#print(network.forward_pass([3, 5]))
+#print(network.forward_pass([3, 5]))"""
