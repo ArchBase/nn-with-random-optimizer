@@ -12,7 +12,7 @@ class Mean_Squared_Error:
         else:
             buffer = []
             for _ in range(len(ground_truth_values)):
-                buffer.append(np.sqrt(-(ground_truth_values[_] - predicted_values[_])))
+                buffer.append(ground_truth_values[_] - predicted_values[_])
             return buffer
     
     def get_cost(self, predicted_values=[], ground_truth_values=[]):
@@ -21,4 +21,11 @@ class Mean_Squared_Error:
         for i in buffer:
             cost += i
         return cost
+    def get_reward(self, predicted_values=[], ground_truth_values=[]):
+        buffer = self.get_loss_array(predicted_values, ground_truth_values)
+        reward = -1
+        for i in buffer:
+            reward += i
+        
+        return reward
 

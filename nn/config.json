@@ -1,7 +1,7 @@
 {
-    "random_value_max": 10,
-    "random_value_min": 0,
-    "optimizer_random_min": 0,
-    "optimizer_random_max": 10,
-    "max_random_patience": 100
+    "random_value_max": 1,
+    "random_value_min": -1,
+    "optimizer_random_min": -1,
+    "optimizer_random_max": 1,
+    "max_random_patience": 10
 }

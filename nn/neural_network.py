@@ -13,12 +13,13 @@ class Neuron:
         self.bias = np.random.uniform(gb.config["random_value_min"], gb.config["random_value_max"])
     
     def forward_pass(self, input_data=[]):
+        self.buffer = 0
         if len(input_data) != len(self.weights):
             print("Shape error")
             return
         else:
             for _ in range(len(input_data)):
-                self.buffer += self.weights[_] * input_data[_]
+                self.buffer = self.buffer + (self.weights[_] * input_data[_])
             self.buffer += self.bias
             return max(0, self.buffer)
     def apply_parameters(self, parameter_array=[]):
@@ -43,7 +44,7 @@ class Dense_Layer:
         self.buffer.clear()
         for _ in range(self.no_of_neurons):
             self.buffer.append(self.neurons[_].forward_pass(input_data=input_data))
-        return self.buffer
+        return self.buffer.copy()
     
     def get_parameter_array(self):
         self.buffer.clear()
