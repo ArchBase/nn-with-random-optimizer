@@ -23,18 +23,24 @@ class Flash_Optimizer:
         return array
 
     def train_on_batch(self, x_train=[], y_train=[]):
-        print(x_train)
-        print("old")
         self.prev_params = self.network.get_parameter_array()
-        self.prev_predicted = self.network.forward_pass(x_train.copy())
-        print(self.prev_predicted)
+        self.network.apply_parameter(self.prev_params)
+        self.prev_predicted = self.network.forward_pass(x_train)
+        self.prev_reward = self.loss_function.get_reward(self.prev_predicted, y_train)
+        self.new_params = self.prev_params.copy()
+        #print(f"trained on batch x: {x_train} y:{y_train} reward:{self.prev_predicted} params:{self.prev_params}")
 
-        print("new")
-        self.new_params = self.randomly_modify_array(self.prev_params.copy())
+        #self.new_params = self.randomly_modify_array(self.prev_params.copy())
+        print(f"params : {self.new_params}")
         self.network.apply_parameter(self.new_params)
-        self.new_predicted = self.network.forward_pass(x_train.copy())
-        print(self.new_predicted)
-        print("\n\n********************")
+        self.new_predicted = self.network.forward_pass(x_train)
+        self.new_reward = self.loss_function.get_reward(self.new_predicted, y_train)
+        print(f"reward: {self.prev_reward - self.new_reward}")
+        if self.prev_reward - self.new_reward == 0:
+            print(f"REWARD NOT:{self.prev_predicted} and {self.new_predicted}")
+        
+
+        
 
 
 
